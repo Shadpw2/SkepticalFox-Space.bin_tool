@@ -52,6 +52,7 @@ class Row:
 			'BWS2',
 			'BSG2',
 			'WGMM', # in WorldOfTanks.exe: MegalodsFeature
+			'GOBJ',
 			# 'BWTS', # in WorldOfTanks.exe: StaticTextureStreamingSceneProvider
 		], self.header
 
