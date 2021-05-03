@@ -37,6 +37,7 @@ from WGSH import *
 from BWS2 import *
 from BSG2 import *
 from WGMM import *
+from GOBJ import *
 
 
 
@@ -514,5 +515,6 @@ all_sections_cls_1_12_1 = [
     WTau_Section_1_6_0,
     WTbl_Section_0_9_20,
     WGSH_Section_1_0_0,
-    WGMM_Section_1_4_0
+    WGMM_Section_1_4_0,
+    GOBJ_Section_1_12_1
 ]
