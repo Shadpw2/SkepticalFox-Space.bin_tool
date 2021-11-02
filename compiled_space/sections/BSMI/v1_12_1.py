@@ -26,7 +26,6 @@ class ModelAnimation_v1_12_1(CStructure):
         ]
 
     _tests_ = {
-        'clip_name_fnv': {'==': 2216829733},
         'pad1': {'==': 0},
         'pad2': {'==': 0}
     }

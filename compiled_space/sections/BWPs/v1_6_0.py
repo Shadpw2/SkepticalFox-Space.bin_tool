@@ -33,26 +33,6 @@ class BWPs_Section_1_6_0(Base_JSON_Section):
 		(list, 'particles', ParticleInfo_1_6_0),
 		]
 
-	def from_chunk(self, bwst, bwal, particles):
-		import ResMgr
-		for value in particles:
-			res = value.readString('resource')
-			res_sec = ResMgr.openSection(res)
-			seedTime = 0.1
-
-			resource_fnv = bwst.add_str(res)
-
-			bwal.add(1, resource_fnv)
-
-			if res_sec is not None:
-				seedTime = res_sec.readFloat('seedTime', 0.1)
-			self._data['particles'].append({
-				'transform': get_vec16_from_mat4x4(value.readMatrix('transform')),
-				'resource_fnv': resource_fnv,
-				'reflection_visible': value.readBool('reflectionVisible'),
-				'seed_time': seedTime
-			})
-
 	def to_xml(self, chunks):
 		write = lambda *args: self._add2xml(el, *args)
 
