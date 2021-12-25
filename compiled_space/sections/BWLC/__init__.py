@@ -6,6 +6,7 @@ from .v1_0_1 import BWLC_Section_1_0_1
 from .v1_6_0 import BWLC_Section_1_6_0
 from .v1_7_0 import BWLC_Section_1_7_0
 from .v1_11_0 import BWLC_Section_1_11_0
+from .v1_15_0 import BWLC_Section_1_15_0
 
 
 

@@ -11,7 +11,7 @@ for pkg_path in packages:
     name = pkg_path.stem
     try:
         with ZipFile(pkg_path, 'r') as zf:
-            zf.extract(f'spaces/{name}/space.bin', './1.7.0.2')
+            zf.extract(f'spaces/{name}/space.bin', './1.15.0.0')
             print(pkg_path)
     except:
         pass

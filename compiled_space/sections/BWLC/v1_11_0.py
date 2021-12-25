@@ -29,7 +29,7 @@ class PulseLight_v1_11_0(CStructure):
         ('unknown_7',      c_uint32     ),
         ('unknown_8',      c_float      ),
         ('unknown_9',      c_float      ),
-        ('unknown_10',     c_float     ),
+        ('unknown_10',     c_float      ),
         ('unknown_11',     c_uint32     ),
         ]
 
