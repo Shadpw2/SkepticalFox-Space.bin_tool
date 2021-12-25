@@ -13,5 +13,5 @@ class BWVL_Section_1_15_0(Base_JSON_Section):
 	int1 = 0
 
 	_fields_ = [
-		(list, '1', '<19I' ),
+		(list, '1', '<16f3I' ), # transform + keys from BWST
 		]
