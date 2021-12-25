@@ -24,10 +24,10 @@ class PulseLight_v1_15_0(CStructure):
         ('frame_num',            c_uint32     ),
         ('time_scale',           c_float      ), # timeScale
         ('duration',             c_float      ),
-        ('unknown_6',            c_uint32     ),
+        ('visibility_mask',      c_uint32     ), # visibilityMask
         ('unknown_7',            c_uint32     ),
-        ('unknown_8',            c_float      ),
         ('hemisphere_direction', c_float * 3  ), # hemisphereDirection
+        ('unknown_8',            c_float      ),
         ]
 
     _tests_ = {
@@ -49,12 +49,6 @@ class PulseSpotLight_v1_15_0(CStructure):
         ('colour',          c_float * 4  ),
         ('unknown',         c_float      ),
         ('multiplier',      c_float      ),
-        ('cast_shadows',    c_uint32, 1  ),
-        ('pad1',            c_uint32, 7  ),
-        ('unknown_bit_1',   c_uint32, 1  ),
-        ('unknown_bit_2',   c_uint32, 1  ),
-        ('unknown_bit_3',   c_uint32, 1  ),
-        ('pad2',            c_uint32, 21 ),
         ('shadows_type',    c_uint32     ), # shadowsType
         ('shadows_quality', c_uint32     ), # shadowsQuality
         ('shadow_bias',     c_float      ), # shadowBias
@@ -62,8 +56,14 @@ class PulseSpotLight_v1_15_0(CStructure):
         ('frame_num',       c_uint32     ),
         ('time_scale',      c_float      ), # timeScale
         ('duration',        c_float      ),
-        ('unknown_6',       c_uint32     ),
+        ('visibility_mask', c_uint32     ), # visibilityMask
         ('unknown_7',       c_uint32     ),
+        ('cast_shadows',    c_uint32, 1  ),
+        ('pad1',            c_uint32, 7  ),
+        ('unknown_bit_1',   c_uint32, 1  ),
+        ('unknown_bit_2',   c_uint32, 1  ),
+        ('unknown_bit_3',   c_uint32, 1  ),
+        ('pad2',            c_uint32, 21 ),
         ]
 
     _tests_ = {
