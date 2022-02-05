@@ -31,7 +31,10 @@ space = CompiledSpace(spacebin, args.wotver)
 def attempt_to_unpack(string):
     for pkg in packages.values():
         try:
-            pkg.extract(string, './out')
+            unpfile = Path(pkg.extract(string, './out'))
+            # remove _processed suffix
+            if unpfile.suffix.endswith('_processed'):
+                unpfile.replace(str(unpfile)[:-10])
             return
         except Exception:
             pass
