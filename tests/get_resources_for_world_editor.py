@@ -24,6 +24,9 @@ for pkg_path in (args.wotpath / 'res' / 'packages').glob('*.pkg'):
     packages[pkg_path.name] = ZipFile(pkg_path, 'r')
 
 
+packages[f'{args.mapname}.pkg'].extractall('./out')
+
+
 spacebin = packages[f'{args.mapname}.pkg'].open(f'spaces/{args.mapname}/space.bin')
 space = CompiledSpace(spacebin, args.wotver)
 
