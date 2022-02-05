@@ -118,7 +118,7 @@ class WGSD_Section_1_0_0(Base_JSON_Section):
 		_2_127 = self._data['2_127']
 		_2_135 = self._data['2_135']
 
-		if _2_127:
+		if _2_127 or _2_135:
 			res += pack('<I', 2)
 		elif _1_135 or _1_127:
 			res += pack('<I', 1)
