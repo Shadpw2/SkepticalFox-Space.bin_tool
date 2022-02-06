@@ -1,6 +1,7 @@
 ﻿from pathlib import Path
 from zipfile import ZipFile
 from struct import unpack, calcsize
+from functools import cache
 import xml.etree.ElementTree as ET
 import argparse
 import sys
@@ -34,6 +35,7 @@ print('# unpack stage')
 packages[f'{args.mapname}.pkg'].extractall(outdir)
 
 
+@cache
 def attempt_to_unpack(string):
     for pkg in packages.values():
         try:
@@ -41,6 +43,7 @@ def attempt_to_unpack(string):
             return True
         except KeyError:
             pass
+    print(f'-> FAILED: {string}')
     return False
 
 
@@ -59,8 +62,10 @@ def unpack_blend_textures(fr):
         for j in range(tex_cnt):
             name_size = unpack('<I', fr.read(4))[0]
             name = fr.read(name_size).decode('utf-8')
-            if not attempt_to_unpack(name):
-                print(f'-> FAILED: {name}')
+            attempt_to_unpack(name)
+            attempt_to_unpack(name[:-7] + '_NM.dds')
+            attempt_to_unpack(name[:-7] + '_macro_AM.dds')
+            attempt_to_unpack(name[:-7] + '_macro_NM.dds')
         fr.seek(xsize * ysize, os.SEEK_CUR)
 
 
@@ -83,10 +88,30 @@ for it in settings_tree.findall('.//tile'):
 
 strings = space.sections['BWST']._data.values()
 for string in strings:
+    if string.endswith('.cdata_processed/terrain2'):
+        continue
+    if '.' not in string:
+        continue
+    if '/' not in string:
+        continue
     if '.primitives/' in string:
         new_string = string.split('.primitives/')[0]
         attempt_to_unpack(f'{new_string}.primitives_processed')
         attempt_to_unpack(f'{new_string}.visual_processed')
+        continue
+    if string.endswith('.primitives'):
+        new_string = string.split('.primitives')[0]
+        attempt_to_unpack(f'{new_string}.primitives_processed')
+        attempt_to_unpack(f'{new_string}.visual_processed')
+        continue
+    if string.endswith('.atlas'):
+        new_string = string.split('.atlas')[0]
+        attempt_to_unpack(f'{new_string}.atlas_processed')
+        continue
+    if string.endswith('.png'):
+        new_string = string.split('.png')[0]
+        attempt_to_unpack(string)
+        attempt_to_unpack(f'{new_string}.dds')
         continue
     attempt_to_unpack(string)
 
