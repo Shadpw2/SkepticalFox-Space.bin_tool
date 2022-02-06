@@ -31,26 +31,29 @@ outdir = Path('./out')
 
 
 packages = {}
+filepath2pkg = {}
 for pkg_path in (args.wotpath / 'res' / 'packages').glob('*.pkg'):
     if not args.unpackhd:
         if pkg_path.name.endswith(('_hd.pkg', '_hd-part1.pkg', '_hd-part2.pkg')):
             continue
-    packages[pkg_path.name] = ZipFile(pkg_path, 'r')
+    zfile = ZipFile(pkg_path, 'r')
+    packages[pkg_path.name] = zfile
+    for _file in zfile.infolist():
+        filepath2pkg[_file.filename.lower()] = (zfile, _file.filename)
 
 
 print('# unpack stage')
 packages[f'{args.mapname}.pkg'].extractall(outdir)
+if args.unpackhd:
+    packages[f'{args.mapname}_hd.pkg'].extractall(outdir)
 
 
 @cache
 def attempt_to_unpack(string):
-    for pkg in packages.values():
-        try:
-            pkg.extract(string, outdir)
-            return
-        except KeyError:
-            pass
-    if args.debug:
+    if string.lower() in filepath2pkg:
+        zfile, fname = filepath2pkg[string.lower()]
+        zfile.extract(fname, outdir)
+    elif args.debug:
         print(f'-> FAILED: {string}')
 
 
@@ -85,6 +88,30 @@ def unpack_blend_textures(fr):
             attempt_to_unpack(name[:-7] + '_macro_AM.dds')
             attempt_to_unpack(name[:-7] + '_macro_NM.dds')
         fr.seek(xsize * ysize, os.SEEK_CUR)
+
+
+def unpack_atlas(fr):
+    fr.seek(-1, os.SEEK_END)
+    eof = fr.tell()
+    fr.seek(0, os.SEEK_SET)
+
+    version, atlas_width, atlas_height, unused1 = unpack('<4I', fr.read(calcsize('<4I')))
+    assert version == 1, version
+    assert unused1 in [0, 1], unused1
+    magic = fr.read(4)
+    assert magic == b'BCVT', magic
+    unused2, dds_chunk_size = unpack('<IQ', fr.read(calcsize('<IQ')))
+    assert unused2 == 1, unused2
+    fr.seek(dds_chunk_size, os.SEEK_CUR)
+    while fr.tell() < eof:
+        x0, x1, y0, y1 = unpack('<4I', fr.read(calcsize('<4I')))
+        filepath = ''
+        while True:
+            c = fr.read(1)
+            if c == b'\x00': break
+            filepath += c.decode('utf-8')
+        attempt_to_unpack(filepath)
+        attempt_to_unpack(filepath[:-4] + '.dds')
 
 
 for path in (outdir / 'spaces' / args.mapname).glob('*.cdata_processed'):
@@ -136,6 +163,11 @@ for string in strings:
 print('# rename stage')
 for path in outdir.rglob('*_processed'):
     path.replace(str(path)[:-10])
+
+
+print('# unpack atlas stage')
+for path in outdir.rglob('*.atlas'):
+    unpack_atlas(path.open('rb'))
 
 
 print('# unpack packed xml stage')
