@@ -53,8 +53,21 @@ def attempt_to_unpack(string):
     if string.lower() in filepath2pkg:
         zfile, fname = filepath2pkg[string.lower()]
         zfile.extract(fname, outdir)
-    elif args.debug:
+        return True
+    if args.debug:
         print(f'-> FAILED: {string}')
+    return False
+
+
+@cache
+def attempt_to_convert_dds_to_png(string):
+    try:
+        import wand.image
+    except ImportError:
+        return
+    with wand.image.Image(filename=string) as img:
+        img.compression = 'no'
+        img.save(filename=string[:-4] + '.png')
 
 
 def unpack_packed_xml(path):
@@ -110,8 +123,9 @@ def unpack_atlas(fr):
             c = fr.read(1)
             if c == b'\x00': break
             filepath += c.decode('utf-8')
-        attempt_to_unpack(filepath)
-        attempt_to_unpack(filepath[:-4] + '.dds')
+        if not attempt_to_unpack(filepath):
+            if attempt_to_unpack(filepath[:-4] + '.dds'):
+                attempt_to_convert_dds_to_png(str(outdir / filepath)[:-4] + '.dds')
 
 
 for path in (outdir / 'spaces' / args.mapname).glob('*.cdata_processed'):
@@ -153,9 +167,9 @@ for string in strings:
         attempt_to_unpack(f'{new_string}.atlas_processed')
         continue
     if string.endswith('.png'):
-        new_string = string.split('.png')[0]
-        attempt_to_unpack(string)
-        attempt_to_unpack(f'{new_string}.dds')
+        if not attempt_to_unpack(string):
+            if attempt_to_unpack(string[:-4] + '.dds'):
+                attempt_to_convert_dds_to_png(str(outdir / string)[:-4] + '.dds')
         continue
     attempt_to_unpack(string)
 
