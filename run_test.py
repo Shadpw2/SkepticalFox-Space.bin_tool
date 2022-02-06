@@ -8,7 +8,7 @@ from compiled_space import CompiledSpace
 
 def unpack_from_space_bin(space_path, unp_dir, filepath, ver):
     try:
-        with open(bin_file_name_in, 'rb') as fr:
+        with open(filepath, 'rb') as fr:
             space1 = CompiledSpace(fr, ver)
 
         unp_dir.mkdir(exist_ok=True)
