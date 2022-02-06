@@ -162,7 +162,10 @@ for string in strings:
 
 
 print('# rename stage')
-for path in outdir.rglob('*_processed'):
+for path in outdir.rglob('*.visual_processed'):
+    path.replace(str(path)[:-10])
+
+for path in outdir.rglob('*.primitives_processed'):
     path.replace(str(path)[:-10])
 
 
@@ -175,7 +178,7 @@ for path in outdir.rglob('*.model'):
 
 
 print('# unpack atlas stage')
-for path in outdir.rglob('*.atlas'):
+for path in outdir.rglob('*.atlas_processed'):
     unpack_atlas(path.open('rb'))
 
 
