@@ -38,8 +38,10 @@ def attempt_to_unpack(string):
     for pkg in packages.values():
         try:
             pkg.extract(string, outdir)
+            return True
         except KeyError:
             pass
+    return False
 
 
 def unpack_blend_textures(fr):
@@ -56,8 +58,9 @@ def unpack_blend_textures(fr):
         assert padding == 0
         for j in range(tex_cnt):
             name_size = unpack('<I', fr.read(4))[0]
-            name = fr.read(name_size)
-            attempt_to_unpack(name)
+            name = fr.read(name_size).decode('utf-8')
+            if not attempt_to_unpack(name):
+                print(f'-> FAILED: {name}')
         fr.seek(xsize * ysize, os.SEEK_CUR)
 
 
@@ -74,7 +77,8 @@ space.unp_for_world_editor(outdir / 'spaces' / args.mapname)
 
 settings_tree = ET.parse((outdir / 'spaces' / args.mapname / 'unpacked_for_world_editor' / 'space.settings'))
 for it in settings_tree.findall('.//tile'):
-    attempt_to_unpack(it.text)
+    if not attempt_to_unpack(it.text):
+        print(f'-> FAILED: {it.text}')
 
 
 strings = space.sections['BWST']._data.values()
