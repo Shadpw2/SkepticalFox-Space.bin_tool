@@ -14,6 +14,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--wotpath', type=Path, required=True)
 parser.add_argument('--wotver', type=str, required=True)
 parser.add_argument('--mapname', type=str, required=True)
+parser.add_argument('--unpackhd', action='store_true')
+parser.add_argument('--debug', action='store_true')
 
 args = parser.parse_args()
 
@@ -21,6 +23,8 @@ args = parser.parse_args()
 print('wotpath:', args.wotpath)
 print('wotver:', args.wotver)
 print('mapname:', args.mapname)
+print('unpackhd:', args.unpackhd)
+print('debug:', args.debug)
 
 
 outdir = Path('./out')
@@ -28,6 +32,9 @@ outdir = Path('./out')
 
 packages = {}
 for pkg_path in (args.wotpath / 'res' / 'packages').glob('*.pkg'):
+    if not args.unpackhd:
+        if pkg_path.name.endswith(('_hd.pkg', '_hd-part1.pkg', '_hd-part2.pkg')):
+            continue
     packages[pkg_path.name] = ZipFile(pkg_path, 'r')
 
 
@@ -40,11 +47,22 @@ def attempt_to_unpack(string):
     for pkg in packages.values():
         try:
             pkg.extract(string, outdir)
-            return True
+            return
         except KeyError:
             pass
-    print(f'-> FAILED: {string}')
-    return False
+    if args.debug:
+        print(f'-> FAILED: {string}')
+
+
+def unpack_packed_xml(path):
+    from xml.etree import ElementTree as ET
+    from xml.dom import minidom
+    from xml_utils.XmlUnpacker import XmlUnpacker
+    with path.open('rb') as f:
+        unpacked = XmlUnpacker().read(f)
+    with path.open('w') as f:
+        reparsed = minidom.parseString(ET.tostring(unpacked))
+        f.write(reparsed.toprettyxml())
 
 
 def unpack_blend_textures(fr):
@@ -82,8 +100,7 @@ space.unp_for_world_editor(outdir / 'spaces' / args.mapname)
 
 settings_tree = ET.parse((outdir / 'spaces' / args.mapname / 'unpacked_for_world_editor' / 'space.settings'))
 for it in settings_tree.findall('.//tile'):
-    if not attempt_to_unpack(it.text):
-        print(f'-> FAILED: {it.text}')
+    attempt_to_unpack(it.text)
 
 
 strings = space.sections['BWST']._data.values()
@@ -119,6 +136,14 @@ for string in strings:
 print('# rename stage')
 for path in outdir.rglob('*_processed'):
     path.replace(str(path)[:-10])
+
+
+print('# unpack packed xml stage')
+for path in outdir.rglob('*.visual'):
+    unpack_packed_xml(path)
+
+for path in outdir.rglob('*.model'):
+    unpack_packed_xml(path)
 
 
 print('# replace stage')
