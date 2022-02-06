@@ -59,17 +59,6 @@ def attempt_to_unpack(string):
     return False
 
 
-@cache
-def attempt_to_convert_dds_to_png(string):
-    try:
-        import wand.image
-    except ImportError:
-        return
-    with wand.image.Image(filename=string) as img:
-        img.compression = 'no'
-        img.save(filename=string[:-4] + '.png')
-
-
 def unpack_packed_xml(path):
     from xml.etree import ElementTree as ET
     from xml.dom import minidom
@@ -124,8 +113,7 @@ def unpack_atlas(fr):
             if c == b'\x00': break
             filepath += c.decode('utf-8')
         if not attempt_to_unpack(filepath):
-            if attempt_to_unpack(filepath[:-4] + '.dds'):
-                attempt_to_convert_dds_to_png(str(outdir / filepath)[:-4] + '.dds')
+            attempt_to_unpack(filepath[:-4] + '.dds')
 
 
 for path in (outdir / 'spaces' / args.mapname).glob('*.cdata_processed'):
@@ -168,8 +156,7 @@ for string in strings:
         continue
     if string.endswith('.png'):
         if not attempt_to_unpack(string):
-            if attempt_to_unpack(string[:-4] + '.dds'):
-                attempt_to_convert_dds_to_png(str(outdir / string)[:-4] + '.dds')
+            attempt_to_unpack(string[:-4] + '.dds')
         continue
     attempt_to_unpack(string)
 
@@ -179,17 +166,17 @@ for path in outdir.rglob('*_processed'):
     path.replace(str(path)[:-10])
 
 
-print('# unpack atlas stage')
-for path in outdir.rglob('*.atlas'):
-    unpack_atlas(path.open('rb'))
-
-
 print('# unpack packed xml stage')
 for path in outdir.rglob('*.visual'):
     unpack_packed_xml(path)
 
 for path in outdir.rglob('*.model'):
     unpack_packed_xml(path)
+
+
+print('# unpack atlas stage')
+for path in outdir.rglob('*.atlas'):
+    unpack_atlas(path.open('rb'))
 
 
 print('# replace stage')
