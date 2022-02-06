@@ -1,6 +1,7 @@
 ﻿from pathlib import Path
 from zipfile import ZipFile
 from struct import unpack, calcsize
+import xml.etree.ElementTree as ET
 import argparse
 import sys
 import os
@@ -69,6 +70,11 @@ for path in (outdir / 'spaces' / args.mapname).glob('*.cdata_processed'):
 spacebin = packages[f'{args.mapname}.pkg'].open(f'spaces/{args.mapname}/space.bin')
 space = CompiledSpace(spacebin, args.wotver)
 space.unp_for_world_editor(outdir / 'spaces' / args.mapname)
+
+
+settings_tree = ET.parse((outdir / 'spaces' / args.mapname / 'unpacked_for_world_editor' / 'space.settings'))
+for it in settings_tree.findall('.//tile'):
+    attempt_to_unpack(it.text)
 
 
 strings = space.sections['BWST']._data.values()
