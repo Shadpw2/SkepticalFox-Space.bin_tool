@@ -61,6 +61,12 @@ class Chunks:
 
             return (self.name_to_tree[name], transform)
 
+        transform = [
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            pos[0], pos[1], pos[2],  1.0,
+        ]
         return (self.gchunk, transform)
 
     def get_by_transform(self, transform):
