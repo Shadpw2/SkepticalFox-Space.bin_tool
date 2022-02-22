@@ -1,8 +1,15 @@
+import argparse
 import logging
 logging.basicConfig(filename='testing.log',  filemode='w', level=logging.INFO)
 
 from pathlib import Path
 from compiled_space import CompiledSpace
+
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--remove-water', action='store_true')
+args = parser.parse_args()
 
 
 
@@ -26,6 +33,14 @@ def pack_from_dir(unp_dir, dirpath, ver):
     try:
         space2 = CompiledSpace()
         space2.from_dir(unp_dir)
+
+        if args.remove_water:
+            space2.sections['BWWa']._data['1'] = []
+            space2.sections['BWWa']._data['2'] = []
+            space2.sections['BWWa']._data['3'] = []
+            space2.sections['BWWa']._data['4'] = []
+            space2.sections['BWWa']._data['5'] = []
+
         space2.save_to_bin(pck_dir.joinpath('space.bin'))
 
         bin_file_name_in = pck_dir.joinpath('space.bin')
