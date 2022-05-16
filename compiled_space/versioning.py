@@ -9,7 +9,7 @@ from sections import (
     all_sections_cls_1_5_1, all_sections_cls_1_6_0,
     all_sections_cls_1_6_1, all_sections_cls_1_7_0,
     all_sections_cls_1_11_0, all_sections_cls_1_12_1,
-    all_sections_cls_1_15_0)
+    all_sections_cls_1_15_0, all_sections_cls_1_16_1)
 
 
 
@@ -118,13 +118,19 @@ WOT_VERSIONS = [
         'sections': all_sections_cls_1_12_1,
         'versions': (
             '1.12.1.0', '1.14.1.2',
-            '1.16.0.0', # actual
+            '1.16.0.0',
         )
     },
     {
         'sections': all_sections_cls_1_15_0,
         'versions': (
             '1.15.0.0',
+        )
+    },
+    {
+        'sections': all_sections_cls_1_16_1,
+        'versions': (
+            '1.16.1.0', # actual
         )
     }
 ]

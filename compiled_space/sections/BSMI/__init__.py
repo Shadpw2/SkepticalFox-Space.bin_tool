@@ -7,3 +7,4 @@ from .v1_0_0 import BSMI_Section_1_0_0
 from .v1_2_0 import BSMI_Section_1_2_0
 from .v1_5_0 import BSMI_Section_1_5_0
 from .v1_12_1 import BSMI_Section_1_12_1
+from .v1_16_1 import BSMI_Section_1_16_1
