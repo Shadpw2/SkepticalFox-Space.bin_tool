@@ -2,7 +2,7 @@
 
 from _base_json_section import *
 from .v1_0_0 import ChunkModel_v1_0_0
-from .v1_5_0 import BSMI_Section_1_5_0
+from .v1_12_1 import BSMI_Section_1_12_1
 
 
 class ModelAnimation_v1_16_1(CStructure):
@@ -10,8 +10,9 @@ class ModelAnimation_v1_16_1(CStructure):
 
     _fields_ = [
         ('model_index',   c_uint32     ),
-        ('seq_res_fnv',   c_uint32     ),
+        ('unknown_5',     c_uint32     ), # ??? new in 1.16.1 ???
         ('clip_name_fnv', c_uint32     ), # sequence/clipName
+        ('seq_res_fnv',   c_uint32     ),
         ('auto_start',    c_uint32, 1  ), # sequence/autoStart
         ('loop',          c_uint32, 1  ), # sequence/loop
         ('pad1',          c_uint32, 14 ),
@@ -23,7 +24,6 @@ class ModelAnimation_v1_16_1(CStructure):
         ('delay',         c_float      ), # sequence/delay
         ('unknown_3',     c_float      ),
         ('unknown_4',     c_float      ),
-        ('unknown_5',     c_float      ),
         ]
 
     _tests_ = {
@@ -51,4 +51,4 @@ class BSMI_Section_1_16_1(Base_JSON_Section):
         ]
 
     def to_xml(self, chunks):
-        BSMI_Section_1_5_0.to_xml(self, chunks)
+        BSMI_Section_1_12_1.to_xml(self, chunks)
