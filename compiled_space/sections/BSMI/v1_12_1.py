@@ -9,20 +9,21 @@ class ModelAnimation_v1_12_1(CStructure):
     _size_ = 36
 
     _fields_ = [
-        ('model_index',   c_uint32     ),
-        ('seq_res_fnv',   c_uint32     ),
-        ('clip_name_fnv', c_uint32     ), # sequence/clipName
-        ('auto_start',    c_uint32, 1  ), # sequence/autoStart
-        ('loop',          c_uint32, 1  ), # sequence/loop
-        ('pad1',          c_uint32, 14 ),
-        ('unknown_1',     c_uint32, 1  ),
-        ('unknown_2',     c_uint32, 1  ),
-        ('pad2',          c_uint32, 14 ),
-        ('loop_count',    c_int32      ), # sequence/loopCount
-        ('speed',         c_float      ), # sequence/speed
-        ('delay',         c_float      ), # sequence/delay
-        ('unknown_3',     c_float      ),
-        ('unknown_4',     c_float      ),
+        ('model_index',     c_uint32     ),
+        ('seq_res_fnv',     c_uint32     ),
+        ('clip_name_fnv',   c_uint32     ), # sequence/clipName
+        ('auto_start',      c_uint32, 1  ), # sequence/autoStart
+        ('loop',            c_uint32, 1  ), # sequence/loop
+        ('is_synchronized', c_uint32, 1  ), # sequence/isSynchronized
+        ('pad1',            c_uint32, 13 ),
+        ('unknown_1',       c_uint32, 1  ),
+        ('unknown_2',       c_uint32, 1  ),
+        ('pad2',            c_uint32, 14 ),
+        ('loop_count',      c_int32      ), # sequence/loopCount (-1 = infinity)
+        ('speed',           c_float      ), # sequence/speed
+        ('delay',           c_float      ), # sequence/delay
+        ('unknown_3',       c_float      ),
+        ('lod_scale',       c_float      ), # sequence/lodScale
         ]
 
     _tests_ = {
