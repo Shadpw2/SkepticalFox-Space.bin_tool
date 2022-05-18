@@ -25,7 +25,7 @@ class PulseLight_v1_15_0(CStructure):
         ('time_scale',           c_float      ), # timeScale
         ('duration',             c_float      ),
         ('visibility_mask',      c_uint32     ), # visibilityMask
-        ('unknown_7',            c_uint32     ),
+        ('decorative',           c_uint32     ), # decorative (Decor Type)
         ('hemisphere_direction', c_float * 3  ), # hemisphereDirection
         ('unknown_8',            c_float      ),
         ]
@@ -57,7 +57,7 @@ class PulseSpotLight_v1_15_0(CStructure):
         ('time_scale',      c_float      ), # timeScale
         ('duration',        c_float      ),
         ('visibility_mask', c_uint32     ), # visibilityMask
-        ('unknown_7',       c_uint32     ),
+        ('decorative',      c_uint32     ), # decorative (Decor Type)
         ('cast_shadows',    c_uint32, 1  ),
         ('pad1',            c_uint32, 7  ),
         ('unknown_bit_1',   c_uint32, 1  ),
