@@ -24,7 +24,7 @@ WOT_VERSIONS = [
     {
         'sections': all_sections_cls_0_9_14,
         'versions': (
-            '0.9.14',
+            '0.9.14', '0.9.14.1',
         )
     },
     {
@@ -130,7 +130,8 @@ WOT_VERSIONS = [
     {
         'sections': all_sections_cls_1_16_1,
         'versions': (
-            '1.16.1.0', # actual
+            '1.16.1.0',
+            '1.17.0.0', # actual
         )
     }
 ]
