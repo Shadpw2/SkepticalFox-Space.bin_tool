@@ -9,11 +9,16 @@ class PositionInfo(CStructure):
     _size_ = 20
 
     _fields_ = [
-        ('type',          c_uint32 * 2 ),
-        ('size',          c_uint32     ), # size of vertices block from .primitives
-        ('data_sizes_id', c_uint32     ), # index data_sizes
-        ('position',      c_uint32     ), # start position in BSGD binary file
+        ('type',          c_uint32 ), # 0 - geom, 10 - uv2, 11 - colour
+        ('vstride',       c_uint32 ),
+        ('size',          c_uint32 ), # size of vertices block from .primitives
+        ('data_sizes_id', c_uint32 ), # index data_sizes
+        ('position',      c_uint32 ), # start position in BSGD binary file
         ]
+
+    _tests_ = {
+        'type': { 'in': (0, 10, 11,) }
+        }
 
 
 

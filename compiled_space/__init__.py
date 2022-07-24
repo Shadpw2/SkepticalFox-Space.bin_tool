@@ -2,7 +2,7 @@
 import os
 import sys
 
-unpacker_version = '0.5.2'
+unpacker_version = '0.5.3'
 
 
 sys.path.insert(0, os.path.dirname(__file__))
