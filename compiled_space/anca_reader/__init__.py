@@ -1,7 +1,3 @@
-''' SkepticalFox 2015-2018 '''
-
-
-
 from collections import OrderedDict
 from struct import unpack
 from io import BytesIO, SEEK_SET, SEEK_CUR, SEEK_END

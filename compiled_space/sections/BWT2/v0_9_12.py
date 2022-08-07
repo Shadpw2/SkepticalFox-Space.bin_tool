@@ -1,5 +1,6 @@
 """ BWT2 (Terrain 2) """
 
+from pathlib import Path
 from _base_json_section import *
 from .common import *
 
@@ -77,6 +78,6 @@ class BWT2_Section_0_9_12(Base_JSON_Section):
         from xml.dom import minidom
 
         for name, path in chunks.name_to_path.items():
-            with open(path, 'w') as f:
+            with path.open('w') as f:
                 reparsed = minidom.parseString(ET.tostring(chunks.name_to_tree[name]))
                 f.write(reparsed.toprettyxml())

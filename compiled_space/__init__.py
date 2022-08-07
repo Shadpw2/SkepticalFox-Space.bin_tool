@@ -7,6 +7,7 @@ unpacker_version = '0.5.3'
 
 sys.path.insert(0, os.path.dirname(__file__))
 
+from pathlib import Path
 from versioning import get_sections
 from space_assembler import space_assembly
 from bwtb_section import BWTB_Section
@@ -39,8 +40,8 @@ class CompiledSpace:
                 continue
             self.__sections[sec_cls.header] = sec_cls(stream, row)
 
-    def from_dir(self, unp_dir):
-        with open(os.path.join(unp_dir, 'info.json'), 'r') as fr:
+    def from_dir(self, unp_dir: Path):
+        with (unp_dir / 'info.json').open('r') as fr:
             info = json.load(fr)
         assert info['unpacker_version'] == unpacker_version, (info['unpacker_version'], unpacker_version)
         self.__wot_version = info['wot_version']
@@ -57,28 +58,27 @@ class CompiledSpace:
                 traceback.print_exc()
                 print(sec_cls)
 
-    def unp_to_dir(self, dir):
+    def unp_to_dir(self, path: Path):
         out_dict = {
             'wot_version': self.__wot_version,
             'unpacker_version': unpacker_version
         }
-        with open(os.path.join(dir, 'info.json'), 'w') as fw:
+        with (path / 'info.json').open('w') as fw:
             json.dump(out_dict, fw, sort_keys=True, indent=4)
         for header, sec in self.__sections.items():
-            sec.unp_to_dir(dir)
+            sec.unp_to_dir(path)
 
-    def unp_for_world_editor(self, dir):
+    def unp_for_world_editor(self, path: Path):
         from xml.etree import ElementTree as ET
         from xml.dom import minidom
         from xml_utils.XmlUnpacker import XmlUnpacker
 
-        out_dir = os.path.join(dir, 'unpacked_for_world_editor')
-        if not os.path.exists(out_dir):
-            os.mkdir(out_dir)
+        out_dir = path / 'unpacked_for_world_editor'
+        out_dir.mkdir(exist_ok=True)
 
-        settings_path = os.path.join(dir, 'space.settings')
-        if os.path.exists(settings_path):
-            with open(settings_path, 'rb') as f:
+        settings_path = path / 'space.settings'
+        if settings_path.is_file():
+            with settings_path.open('rb') as f:
                 settings = XmlUnpacker().read(f)
         else:
             settings = ET.Element('root')
@@ -90,7 +90,7 @@ class CompiledSpace:
         if not hasattr(bwt2, 'prepare_unp_xml'):
             return
 
-        chunks = bwt2.prepare_unp_xml(gchunk, settings, dir, out_dir, self.__sections)
+        chunks = bwt2.prepare_unp_xml(gchunk, settings, path, out_dir, self.__sections)
 
         for header, sec in self.__sections.items():
             if not hasattr(sec, 'to_xml'):
@@ -99,13 +99,13 @@ class CompiledSpace:
 
         bwt2.flush_unp_xml(chunks)
 
-        with open(os.path.join(out_dir, 'global.chunk'), 'w') as f:
+        with (out_dir / 'global.chunk').open('w') as f:
             reparsed = minidom.parseString(ET.tostring(gchunk))
             f.write(reparsed.toprettyxml())
 
-        with open(os.path.join(out_dir, 'space.settings'), 'w') as f:
+        with (out_dir / 'space.settings').open('w') as f:
             reparsed = minidom.parseString(ET.tostring(settings))
             f.write(reparsed.toprettyxml())
 
-    def save_to_bin(self, bin_path):
+    def save_to_bin(self, bin_path: Path):
         space_assembly(bin_path, self.__sections, self.__wot_version, unpacker_version)

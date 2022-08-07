@@ -61,17 +61,17 @@ def my_unpack(*args):
 
 
 class Base_JSON_Section(Base_Section):
-    def unp_to_dir(self, unp_dir):
-        unp_dir = Path(unp_dir)
-        with open(unp_dir.joinpath(f'{self.header}.json'), 'w') as fw:
+    def unp_to_dir(self, unp_dir: Path):
+        json_file = unp_dir / f'{self.header}.json'
+        with json_file.open('w') as fw:
             json.dump(self._data, fw, sort_keys=False, indent='\t')
 
-    def from_dir(self, unp_dir):
-        json_file = Path(unp_dir).joinpath(f'{self.header}.json')
+    def from_dir(self, unp_dir: Path):
+        json_file = unp_dir / f'{self.header}.json'
         self._exist = json_file.is_file()
         if not self._exist:
             return
-        with open(json_file, 'r') as fr:
+        with json_file.open('r') as fr:
             self._data = json.load(fr)
 
     @staticmethod

@@ -60,15 +60,14 @@ class BWSG_Section_0_9_12(Base_JSON_Section):
         #for sz in self._data['data_sizes']:
         #    self._bin_data += stream.read(sz)
 
-    def unp_to_dir(self, unp_dir):
-        unp_dir = Path(unp_dir)
+    def unp_to_dir(self, unp_dir: Path):
         super(BWSG_Section_0_9_12, self).unp_to_dir(unp_dir)
-        with open(unp_dir.joinpath('BWSG.bin'), 'wb') as f:
+        with (unp_dir / 'BWSG.bin').open('wb') as f:
             f.write(self._bin_data)
 
-    def from_dir(self, unp_dir):
+    def from_dir(self, unp_dir: Path):
         super(BWSG_Section_0_9_12, self).from_dir(unp_dir)
-        with open(unp_dir.joinpath('BWSG.bin'), 'rb') as f:
+        with (unp_dir / 'BWSG.bin').open('rb') as f:
             self._bin_data = f.read()
 
     def to_bin(self):

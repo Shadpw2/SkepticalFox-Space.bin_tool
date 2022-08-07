@@ -1,5 +1,6 @@
 """ BWT2 (Terrain 2) """
 
+from pathlib import Path
 from xml.etree import ElementTree as ET
 
 
@@ -16,9 +17,7 @@ class Chunks:
     def gets(self, key):
         return self.__bwst.get(key)
 
-    def add_chunk(self, chunk, out_dir):
-        import os
-
+    def add_chunk(self, chunk, out_dir: Path):
         name = self.gets(chunk['resource_fnv']).split('.')[0]
 
         root = ET.Element('root')
@@ -27,7 +26,7 @@ class Chunks:
         el.text = '%s.cdata/terrain2' % name
 
         self.name_to_tree[name] = root
-        self.name_to_path[name] = os.path.join(out_dir, name + '.chunk')
+        self.name_to_path[name] = (out_dir / f'{name}.chunk')
 
         x = chunk['loc_x'] * self.chunk_size
         y = chunk['loc_y'] * self.chunk_size
