@@ -33,7 +33,7 @@ class Chunks:
         root = ET.Element('root')
         el = ET.SubElement(root, 'terrain')
         el = ET.SubElement(el, 'resource')
-        el.text = '%s.cdata/terrain2' % name
+        el.text = f'{name}.cdata/terrain2'
 
         self.name_to_tree[name] = root
         self.name_to_path[name] = (out_dir / f'{name}.chunk')
@@ -42,6 +42,8 @@ class Chunks:
         y = chunk['loc_y'] * self.chunk_size
 
         self.loc_to_name[(x, y)] = name
+
+        return name
 
     def get_by_worldpos(self, pos):
         x = pos[0]

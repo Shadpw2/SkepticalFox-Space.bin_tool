@@ -95,10 +95,16 @@ class BWT2_Section_1_0_1(Base_JSON_Section):
         chunks = Chunks(gchunk, secs, s1['chunk_size'])
 
         for chunk in self._data['cdatas']:
-            chunks.add_chunk(chunk, out_dir)
+            name = chunks.add_chunk(chunk, out_dir)
 
-        for cdata_path in in_dir.glob('*.cdata_processed'):
-            out_path = (out_dir / f'{cdata_path.stem}.cdata')
+            cdata_path = (in_dir / f'{name}.cdata_processed')
+            if not cdata_path.is_file():
+                continue
+
+            out_path = (out_dir / f'{name}.cdata')
+            if not out_path.parent.is_dir():
+                # dirty hack!!!
+                out_path.parent.mkdir(parents=True)
 
             def cp(aname):
                 try:zw.writestr(aname, zr.read(aname))
