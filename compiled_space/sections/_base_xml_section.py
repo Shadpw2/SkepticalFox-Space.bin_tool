@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from xml.etree import ElementTree as ET
 from xml_utils.XmlUnpacker import XmlUnpacker
 from xml_utils.XmlPacker import XmlPacker
@@ -25,15 +24,13 @@ class Base_XML_Section(Base_Section):
         assert stream.tell() == row.position + row.length, (stream.tell(), row.position + row.length)
         self._exist = True
 
-    def unp_to_dir(self, unp_dir):
-        unp_dir = Path(unp_dir)
-        with open(unp_dir.joinpath(f'{self.header}.xml'), 'w') as fw:
+    def unp_to_dir(self, unp_dir: Path):
+        with (unp_dir / f'{self.header}.xml').open('w') as fw:
             fw.write(prettify(self._data))
 
-    def from_dir(self, unp_dir):
-        unp_dir = Path(unp_dir)
+    def from_dir(self, unp_dir: Path):
         try:
-            self._data = ET.parse(unp_dir.joinpath(f'{self.header}.xml')).getroot()
+            self._data = ET.parse(unp_dir / f'{self.header}.xml').getroot()
             self._exist = True
         except Exception:
             self._exist = False

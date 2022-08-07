@@ -34,9 +34,9 @@ class CStructure(ctypes.LittleEndianStructure):
         for key, val in data.items():
             if hasattr(self, key):
                 if hasattr(val, '__len__'):
-                    exec('self.%s = tuple(val)' % (key))
+                    setattr(self, key, tuple(val))
                 else:
-                    exec('self.%s = val' % key)
+                    setattr(self, key, val)
 
     def from_bin(self, data):
         ctypes.memmove(ctypes.addressof(self), data, self._size_)
@@ -44,9 +44,9 @@ class CStructure(ctypes.LittleEndianStructure):
 
     def test_failed(self, field, value, expr, expected_value):
         logging.info('\nTest failed')
-        logging.info('obj: %s' % self)
-        logging.info('field "%s" = %s' % (field, value))
-        logging.info('test: %s %s' % (expr, expected_value))
+        logging.info(f'obj: {self}')
+        logging.info(f'field "{field}" = {value}')
+        logging.info(f'test: {expr} {expected_value}')
 
     def tests(self):
         if not hasattr(self, '_tests_'):return

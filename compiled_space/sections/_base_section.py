@@ -2,7 +2,7 @@ import os
 
 
 
-class Base_Section(object):
+class Base_Section:
 	_exist = None
 	_data = None
 
@@ -12,9 +12,6 @@ class Base_Section(object):
 			self.from_bin_stream(*args)
 		elif (len(args) == 1) and os.path.isdir(args[0]):
 			self.from_dir(*args)
-
-	def setDataForPyQt(self, treeWidget, strings, QTreeWidgetItem):
-		pass
 
 	def from_bin_stream(self, stream, row):
 		raise NotImplementedError()

@@ -12,7 +12,7 @@ from xml.etree import ElementTree as ET
 
 __all__ = (
     'Base_JSON_Section', 'row_seek', 'CStructure',
-    'get_vec16_from_mat4x4', 'getHash', 'ET'
+    'getHash'
     )
 
 
@@ -22,21 +22,7 @@ def getHash(string):
 
 
 
-def get_vec16_from_mat4x4(mat):
-    vec16 = []
-    for i in range(0, 4):
-        for j in range(0, 4):
-            vec16.append(mat.get(i, j))
-    return vec16
-
-
-
-def packBools(b1, b2, b3, b4):
-    return int(b1) | (int(b2) << 8) | (int(b3) << 16) | (int(b4) << 24)
-
-
-
-def row_seek(check_pos):
+def row_seek(check_pos: bool):
     def my_decorator(func, *args):
         def wrapped(self, stream, row):
             assert row.header == self.header, row.header

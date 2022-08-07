@@ -1,6 +1,7 @@
 ﻿""" BSMI (Model Instances) """
 
 from _base_json_section import *
+from xml.etree import ElementTree as ET
 from .v1_0_0 import ChunkModel_v1_0_0
 from .v1_2_0 import ModelAnimation_v1_2_0
 
