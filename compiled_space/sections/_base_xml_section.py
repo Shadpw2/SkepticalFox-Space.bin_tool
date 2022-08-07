@@ -35,7 +35,7 @@ class Base_XML_Section(Base_Section):
         try:
             self._data = ET.parse(unp_dir.joinpath(f'{self.header}.xml')).getroot()
             self._exist = True
-        except:
+        except Exception:
             self._exist = False
 
     def to_bin(self):

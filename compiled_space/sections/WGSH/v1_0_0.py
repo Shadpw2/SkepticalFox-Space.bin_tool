@@ -1,5 +1,6 @@
 """ WGSH (SHVolume) """
 
+from ctypes import c_float, c_uint32
 from _base_json_section import *
 
 

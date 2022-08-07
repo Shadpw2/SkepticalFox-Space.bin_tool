@@ -1,5 +1,7 @@
 ﻿""" BWSG (Static Geometry) """
 
+from struct import unpack, pack
+from ctypes import c_uint32
 from pathlib import Path
 from _base_json_section import *
 

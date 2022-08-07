@@ -1,5 +1,6 @@
 """ BWT2 (Terrain 2) """
 
+from ctypes import c_float, c_uint16, c_int16, c_uint32, c_int32
 from pathlib import Path
 from _base_json_section import *
 from .common import *
@@ -64,7 +65,7 @@ class BWT2_Section_0_9_12(Base_JSON_Section):
         (list, 'node_contents',        '<I'                        ), # Array of "handles" to actual scene content
         ]
 
-    def prepare_unp_xml(self, gchunk, settings, in_dir, out_dir, secs):
+    def prepare_unp_xml(self, gchunk, settings, in_dir, out_dir: Path, secs):
         s1 = self._data['settings']
         chunks = Chunks(gchunk, secs, s1['chunk_size'])
 
@@ -78,6 +79,9 @@ class BWT2_Section_0_9_12(Base_JSON_Section):
         from xml.dom import minidom
 
         for name, path in chunks.name_to_path.items():
+            if not path.parent.is_dir():
+                # dirty hack!!!
+                path.parent.mkdir(parents=True)
             with path.open('w') as f:
                 reparsed = minidom.parseString(ET.tostring(chunks.name_to_tree[name]))
                 f.write(reparsed.toprettyxml())

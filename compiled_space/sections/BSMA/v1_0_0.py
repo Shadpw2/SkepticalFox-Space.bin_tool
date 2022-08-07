@@ -1,5 +1,6 @@
 """ BSMA (Static Materials) """
 
+from struct import unpack, pack
 from _base_json_section import *
 from .v0_9_12 import MaterialInfo, PropertyInfo, DDS_HEADER
 
@@ -70,6 +71,3 @@ class BSMA_Section_1_0_0(Base_JSON_Section):
             res += pack('<I', tex['str_length'])
             res += tex['str_data'].encode('ascii')
         return res
-
-    def init(self):
-        pass

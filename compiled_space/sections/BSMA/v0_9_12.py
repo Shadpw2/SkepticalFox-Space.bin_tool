@@ -1,5 +1,7 @@
 """ BSMA (Static Materials) """
 
+from struct import unpack, pack
+from ctypes import c_uint32, c_int32
 from _base_json_section import *
 
 

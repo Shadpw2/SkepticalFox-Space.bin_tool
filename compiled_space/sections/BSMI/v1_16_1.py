@@ -1,5 +1,6 @@
 ﻿""" BSMI (Model Instances) """
 
+from ctypes import c_float, c_uint32, c_int32
 from _base_json_section import *
 from .v1_0_0 import ChunkModel_v1_0_0
 from .v1_12_1 import BSMI_Section_1_12_1

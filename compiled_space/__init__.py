@@ -53,7 +53,7 @@ class CompiledSpace:
                 sec = sec_cls(unp_dir)
                 if sec._exist:
                     self.__sections[sec_cls.header] = sec
-            except:
+            except Exception:
                 import traceback
                 traceback.print_exc()
                 print(sec_cls)

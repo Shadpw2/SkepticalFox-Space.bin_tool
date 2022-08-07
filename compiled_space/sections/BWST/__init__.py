@@ -1,5 +1,6 @@
 ﻿""" BWST (String Table) """
 
+from struct import unpack, pack
 from _base_json_section import *
 
 

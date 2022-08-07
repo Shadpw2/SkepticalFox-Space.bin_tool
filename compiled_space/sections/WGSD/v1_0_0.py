@@ -1,5 +1,7 @@
 """ WGSD (Decal) """
 
+from struct import unpack, pack
+from ctypes import c_float, c_uint8, c_uint32
 from _base_json_section import *
 from .v0_9_12 import Decal2Info
 

@@ -1,5 +1,7 @@
 """ BSMA (Static Materials) """
 
+from struct import unpack, pack
+from ctypes import c_uint32, c_int32
 from _base_json_section import *
 from .v0_9_12 import PropertyInfo, DDS_HEADER
 
@@ -85,51 +87,3 @@ class BSMA_Section_1_6_0(Base_JSON_Section):
 			res += pack('<I', tex['str_length'])
 			res += tex['str_data'].encode('ascii')
 		return res
-
-	def init(self):
-		pass
-
-	def from_visual_material(self, bwst, material):
-		'''
-		.visual/renderSet/geometry/primitiveGroup/material
-		'''
-		key_from = len(self._data['props'])
-		key_fx = 0
-		def get_type_by_prop(sec):
-			if sec.has_key('Bool'):
-				value = int(sec['Bool'].asBool)
-				vt = 1
-			elif sec.has_key('Float'):
-				value = sec['Float'].asFloat
-				vt = 2
-			elif sec.has_key('Int'):
-				value = sec['Int'].asInt
-				vt = 3
-			elif sec.has_key('Vector4'):
-				value = len(self._data['vectors'])
-				self._data['vectors'].append(sec['Vector4'].asVector4.tuple())
-				vt = 5
-			elif sec.has_key('Texture'):
-				value = bwst.add_str(sec['Texture'].asString)
-				vt = 6
-			else:
-				assert False
-			prop_fnv = bwst.add_str(sec.asString)
-			return {'prop_fnv': prop_fnv, 'value': value, 'value_type': vt}
-
-		for name, sect in material.items():
-			if name == 'fx':
-				_fx_hash = bwst.add_str(sect.asString)
-				if _fx_hash not in self._data['fx']:
-					key_fx = len(self._data['fx'])
-					self._data['fx'].append(_fx_hash)
-				else:
-					key_fx = self._data['fx'].index(_fx_hash)
-			elif name == 'property':
-				self._data['props'].append(get_type_by_prop(sect))
-		key_to = len(self._data['props']) - 1
-		self._data['materials'].append({
-			'key_fx': key_fx,
-			'key_from': key_from,
-			'key_to': key_to,
-		})

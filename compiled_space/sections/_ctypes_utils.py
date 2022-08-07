@@ -1,7 +1,5 @@
-from collections import OrderedDict
 import logging
 import ctypes
-from ctypes import c_float, c_uint8, c_uint16, c_int16, c_uint32, c_int32, c_uint64
 
 
 
@@ -17,7 +15,7 @@ class CStructure(ctypes.LittleEndianStructure):
     def to_bin(self):
         try:
             return buffer(self)[:]
-        except:
+        except Exception:
             return bytes(self)
 
     def to_dict(self):

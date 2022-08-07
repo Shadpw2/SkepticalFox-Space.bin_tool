@@ -23,7 +23,7 @@ def unpack_from_space_bin(space_path, unp_dir, filepath, ver):
 
         space1.unp_for_world_editor(space_path)
 
-    except:
+    except Exception:
         import traceback
         traceback.print_exc()
 
@@ -47,7 +47,7 @@ def pack_from_dir(unp_dir, dirpath, ver):
         with open(bin_file_name_in, 'rb') as fr:
             space3 = CompiledSpace(fr, ver)
 
-    except:
+    except Exception:
         import traceback
         traceback.print_exc()
 

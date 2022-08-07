@@ -1,5 +1,6 @@
 """ GOBJ (?) """
 
+from ctypes import c_float, c_uint32, c_uint64
 from _base_json_section import *
 
 

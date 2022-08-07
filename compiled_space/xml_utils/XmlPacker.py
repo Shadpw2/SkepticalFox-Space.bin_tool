@@ -152,5 +152,5 @@ def is_b64(s):
 	try:
 		tmp = base64.b64decode(s)
 		return base64.b64encode(tmp).decode('utf8') == s
-	except:
+	except Exception:
 		return False

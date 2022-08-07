@@ -1,5 +1,7 @@
 """ BWT2 (Terrain 2) """
 
+from struct import unpack
+from ctypes import c_float, c_uint32
 from _base_json_section import *
 from .v0_9_12 import ChunkTerrain_v0_9_12, OctreeConfiguration_v0_9_12
 from .v0_9_20 import TerrainSettings1_v0_9_20
@@ -83,12 +85,9 @@ class BWT2_Section_1_0_1(Base_JSON_Section):
         (list, 'node_contents',        '<I'                        ),
         ]
 
-    def prepare_unp_xml(self, gchunk, settings, in_dir, out_dir, secs):
-        from glob import glob
+    def prepare_unp_xml(self, gchunk, settings, in_dir: Path, out_dir: Path, secs):
         from zipfile import ZipFile
         from io import BytesIO
-        from struct import unpack
-        import os
 
         s1 = self._data['settings']
         s2 = self._data['settings2']
@@ -98,13 +97,12 @@ class BWT2_Section_1_0_1(Base_JSON_Section):
         for chunk in self._data['cdatas']:
             chunks.add_chunk(chunk, out_dir)
 
-        for cdata_path in glob('%s\\*.cdata_processed' % in_dir):
-            name = os.path.splitext(os.path.basename(cdata_path))[0]
-            out_path = os.path.join(out_dir, name + '.cdata')
+        for cdata_path in in_dir.glob('*.cdata_processed'):
+            out_path = (out_dir / f'{cdata_path.stem}.cdata')
 
             def cp(aname):
                 try:zw.writestr(aname, zr.read(aname))
-                except:pass
+                except Exception:pass
 
             with ZipFile(cdata_path, 'r') as zr:
                 with ZipFile(out_path, 'w') as zw:

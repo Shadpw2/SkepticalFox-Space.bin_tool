@@ -12,7 +12,7 @@ def unpack_space_bin(pkg_path):
             # TODO: get version from "version.xml"?
             zf.extract(f'spaces/{name}/space.bin', './1.17.0.0')
             print(pkg_path)
-    except:
+    except Exception:
         pass
 
 

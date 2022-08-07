@@ -1,12 +1,22 @@
 """ BWT2 (Terrain 2) """
 
+from dataclasses import dataclass
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
 
+@dataclass(init=False)
 class Chunks:
+    _bwst: object
+    name_to_tree: dict
+    name_to_path: dict
+    loc_to_name: dict
+    gchunk: object
+    chunk_size: float
+    secs: list
+
     def __init__(self, gchunk, secs, chunk_size):
-        self.__bwst = secs['BWST']
+        self._bwst = secs['BWST']
         self.name_to_tree = {}
         self.name_to_path = {}
         self.loc_to_name = {}
@@ -15,7 +25,7 @@ class Chunks:
         self.secs = secs
 
     def gets(self, key):
-        return self.__bwst.get(key)
+        return self._bwst.get(key)
 
     def add_chunk(self, chunk, out_dir: Path):
         name = self.gets(chunk['resource_fnv']).split('.')[0]
