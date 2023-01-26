@@ -2,7 +2,7 @@
 
 from ctypes import c_float, c_uint32, c_int32
 from xml.etree import ElementTree as ET
-from _base_json_section import *
+from .._base_json_section import *
 from .v1_0_0 import ChunkModel_v1_0_0
 
 

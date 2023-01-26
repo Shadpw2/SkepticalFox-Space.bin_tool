@@ -1,6 +1,6 @@
 """ UDOS (User Data Object Section?) """
 
-from _base_xml_section import *
+from .._base_xml_section import *
 
 
 

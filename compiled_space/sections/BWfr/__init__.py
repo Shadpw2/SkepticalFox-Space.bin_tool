@@ -1,6 +1,6 @@
 """ BWfr (Flare) """
 
-from BWfr.utils import *
+from .utils import *
 
 
 

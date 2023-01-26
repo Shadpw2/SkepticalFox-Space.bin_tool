@@ -1,7 +1,7 @@
 """ BWLC (Lights) """
 
 from ctypes import c_float, c_uint32
-from _base_json_section import *
+from .._base_json_section import *
 from .v1_7_0 import BWLC_Section_1_7_0
 
 

@@ -1,6 +1,6 @@
 """ WGMM (Megalod Model Instances) """
 
-from _base_json_section import *
+from .._base_json_section import *
 
 
 

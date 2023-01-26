@@ -1,6 +1,6 @@
 """ WGDE (DestructiblesSceneProvider) """
 
-from _base_json_section import *
+from .._base_json_section import *
 
 
 

@@ -2,7 +2,7 @@
 
 from struct import unpack, pack
 from ctypes import c_uint32, c_int32
-from _base_json_section import *
+from .._base_json_section import *
 from .v0_9_12 import PropertyInfo, DDS_HEADER
 
 

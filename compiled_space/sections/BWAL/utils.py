@@ -1,5 +1,5 @@
 from ctypes import c_uint32
-from _base_json_section import *
+from .._base_json_section import *
 
 
 

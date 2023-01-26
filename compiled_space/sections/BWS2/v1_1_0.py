@@ -1,6 +1,6 @@
 ﻿""" BWS2 (?) """
 
-from BWSG import BWSG_Section_0_9_14
+from ..BWSG import BWSG_Section_0_9_14
 
 
 

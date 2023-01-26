@@ -1,8 +1,8 @@
 from pathlib import Path
 from xml.etree import ElementTree as ET
-from xml_utils.XmlUnpacker import XmlUnpacker
-from xml_utils.XmlPacker import XmlPacker
-from _base_section import *
+from ..xml_utils.XmlUnpacker import XmlUnpacker
+from ..xml_utils.XmlPacker import XmlPacker
+from ._base_section import *
 
 
 

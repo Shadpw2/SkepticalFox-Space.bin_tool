@@ -2,7 +2,7 @@
 
 from ctypes import c_float, c_uint32
 from xml.etree import ElementTree as ET
-from _base_json_section import *
+from .._base_json_section import *
 
 
 

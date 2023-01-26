@@ -1,7 +1,7 @@
 """ BWT2 (Terrain 2) """
 
 from ctypes import c_float, c_uint32, c_int32
-from _base_json_section import *
+from .._base_json_section import *
 from .v0_9_12 import ChunkTerrain_v0_9_12, OctreeConfiguration_v0_9_12
 from .v0_9_14 import BWT2_Section_0_9_14
 from .common import *

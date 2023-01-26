@@ -1,16 +1,14 @@
-﻿import json
-import os
-import sys
-
-unpacker_version = '0.5.3'
+﻿unpacker_version = '0.5.3'
 
 
-sys.path.insert(0, os.path.dirname(__file__))
-
+import json
 from pathlib import Path
-from versioning import get_sections
-from space_assembler import space_assembly
-from bwtb_section import BWTB_Section
+from xml.etree import ElementTree as ET
+from xml.dom import minidom
+from .xml_utils.XmlUnpacker import XmlUnpacker
+from .versioning import get_sections
+from .space_assembler import space_assembly
+from .sections.bwtb_section import BWTB_Section
 
 
 
@@ -69,10 +67,6 @@ class CompiledSpace:
             sec.unp_to_dir(path)
 
     def unp_for_world_editor(self, path: Path):
-        from xml.etree import ElementTree as ET
-        from xml.dom import minidom
-        from xml_utils.XmlUnpacker import XmlUnpacker
-
         out_dir = path / 'unpacked_for_world_editor'
         out_dir.mkdir(exist_ok=True)
 

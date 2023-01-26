@@ -1,6 +1,6 @@
 ﻿""" BSMI (Model Instances) """
 
-from _base_json_section import *
+from .._base_json_section import *
 from .v0_9_12 import ChunkModel, ModelAnimation
 from .v0_9_16 import BSMI_Section_0_9_16
 

@@ -2,7 +2,7 @@
 
 from struct import unpack
 from ctypes import c_float, c_uint32
-from _base_json_section import *
+from .._base_json_section import *
 from .v0_9_12 import ChunkTerrain_v0_9_12, OctreeConfiguration_v0_9_12
 from .v0_9_20 import TerrainSettings1_v0_9_20
 from .v1_0_0 import OutlandCascade_v1_0_0, BWT2_Section_1_0_0

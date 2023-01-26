@@ -2,7 +2,7 @@
 
 from ctypes import c_float, c_uint16, c_int16, c_uint32, c_int32
 from pathlib import Path
-from _base_json_section import *
+from .._base_json_section import *
 from .common import *
 
 

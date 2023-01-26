@@ -1,6 +1,6 @@
 """ CENT (Content?) """
 
-from _base_xml_section import *
+from .._base_xml_section import *
 
 
 

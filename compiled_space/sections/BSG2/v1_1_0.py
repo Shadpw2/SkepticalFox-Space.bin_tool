@@ -1,6 +1,6 @@
 ﻿""" BSG2 (?) """
 
-from _base_binary_section import *
+from .._base_binary_section import *
 
 
 

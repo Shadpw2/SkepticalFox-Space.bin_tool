@@ -1,6 +1,6 @@
 from pathlib import Path
 from struct import unpack, pack
-from versioning import get_sections
+from .versioning import get_sections
 
 
 

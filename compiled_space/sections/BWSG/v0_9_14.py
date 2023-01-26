@@ -1,7 +1,7 @@
 ﻿""" BWSG (Static Geometry) """
 
 from struct import unpack, pack
-from _base_json_section import *
+from .._base_json_section import *
 from .v0_9_12 import PositionInfo, ModelInfo
 
 

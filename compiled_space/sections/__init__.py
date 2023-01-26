@@ -1,44 +1,37 @@
-﻿import os
-import sys
-
-sys.path.insert(0, os.path.dirname(__file__))
-
-
-
-from BWST import *
-from BSMA import *
-from WTau import *
-from BWAL import *
-from BWLC import *
-from SpTr import *
-from BWPs import *
-from BSMI import *
-from BWT2 import *
-from BSMO import *
-from BWCS import *
-from BWfr import *
-from WGSD import *
-from WTCP import *
-from UDOS import *
-from CENT import *
-from BWWa import *
-from BWSG import *
-from WGDE import *
-from BWSS import *
-from WSMI import *
-from WSMO import *
-from BWSV import *
-from WGDN import *
-from BSGD import *
-from BWEP import *
-from WGCO import *
-from WTbl import *
-from WGSH import *
-from BWS2 import *
-from BSG2 import *
-from WGMM import *
-from GOBJ import *
-from BWVL import *
+﻿from .BWST import *
+from .BSMA import *
+from .WTau import *
+from .BWAL import *
+from .BWLC import *
+from .SpTr import *
+from .BWPs import *
+from .BSMI import *
+from .BWT2 import *
+from .BSMO import *
+from .BWCS import *
+from .BWfr import *
+from .WGSD import *
+from .WTCP import *
+from .UDOS import *
+from .CENT import *
+from .BWWa import *
+from .BWSG import *
+from .WGDE import *
+from .BWSS import *
+from .WSMI import *
+from .WSMO import *
+from .BWSV import *
+from .WGDN import *
+from .BSGD import *
+from .BWEP import *
+from .WGCO import *
+from .WTbl import *
+from .WGSH import *
+from .BWS2 import *
+from .BSG2 import *
+from .WGMM import *
+from .GOBJ import *
+from .BWVL import *
 
 
 

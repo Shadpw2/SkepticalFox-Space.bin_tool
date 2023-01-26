@@ -1,8 +1,8 @@
 """ BSMO (Static Model) """
 
 from ctypes import c_uint32
-from _base_json_section import *
-from WSMO.v0_9_12 import (WoTModelInfoItem_v0_9_12,
+from .._base_json_section import *
+from ..WSMO.v0_9_12 import (WoTModelInfoItem_v0_9_12,
                           WoTFallingModelInfoItem_v0_9_12,
                           WoTFragileModelInfoItem_v0_9_12)
 from .v0_9_12 import (ModelLoddingItem_v0_9_12,

@@ -1,6 +1,6 @@
 ﻿""" Versioning - as in res_mods/ """
 
-from sections import (
+from .sections import (
     all_sections_cls_0_9_12, all_sections_cls_0_9_14,
     all_sections_cls_0_9_16, all_sections_cls_0_9_20,
     all_sections_cls_1_0_0, all_sections_cls_1_0_1,
@@ -139,7 +139,8 @@ WOT_VERSIONS = [
         'sections': all_sections_cls_1_17_1,
         'versions': (
             '1.17.1.0',
-            '1.18.0.0', # actual
+            '1.18.0.0',
+            '1.19.0.2', # actual
         )
     }
 ]

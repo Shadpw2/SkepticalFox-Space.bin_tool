@@ -2,11 +2,11 @@ import json
 import logging
 
 from pathlib import Path
-from fnvhash import fnv1a_64
-from _ctypes_utils import *
 from struct import unpack, pack, calcsize
-from _base_section import *
 from xml.etree import ElementTree as ET
+from ..fnvhash import fnv1a_64
+from ._ctypes_utils import *
+from ._base_section import *
 
 
 

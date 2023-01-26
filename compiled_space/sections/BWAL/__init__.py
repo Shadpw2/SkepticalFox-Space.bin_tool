@@ -1,6 +1,6 @@
 """ BWAL (Asset List) """
 
-from BWAL.utils import *
+from .utils import *
 
 
 
